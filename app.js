@@ -1,8 +1,8 @@
 const Language = { EN: 'EN', RU: 'RU' };
-let lang = Language.EN;
+let lang = navigator.language === "ru-RU"? Language.RU:Language.EN;
 let mobileOpen = false;
 let scrolled = false;
-
+console.log(navigator.language);
 const CONTENT = {
   EN: {
     nav: { home: 'Home', projects: 'Projects', contact: 'Contact', about: 'Studio' },
