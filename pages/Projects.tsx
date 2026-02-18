@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { Content, Project } from '../types';
-import ProjectCard from '../components/ProjectCard';
-import Contact from '../components/Contact';
-import FadeIn from '../components/FadeIn';
+import { Content, Project } from '../types.ts';
+import ProjectCard from '../components/ProjectCard.tsx';
+import Contact from '../components/Contact.tsx';
+import FadeIn from '../components/FadeIn.tsx';
 
 interface ProjectsProps {
   content: Content;
@@ -25,8 +25,7 @@ const Projects: React.FC<ProjectsProps> = ({ content, projects }) => {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 mb-32">
-        {/* We know there is only 1 project now, so we make it look like a featured hero card */}
-        {projects.map((project, idx) => (
+        {projects.map((project) => (
           <FadeIn key={project.id} delay={100} direction="up">
             <ProjectCard project={project} />
           </FadeIn>

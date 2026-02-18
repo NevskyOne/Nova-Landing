@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Projects from './pages/Projects';
-import BackgroundElements from './components/BackgroundElements';
-import { Language } from './types';
-import { CONTENT, PROJECTS_DATA } from './constants';
+import Navbar from './components/Navbar.tsx';
+import Footer from './components/Footer.tsx';
+import Home from './pages/Home.tsx';
+import Projects from './pages/Projects.tsx';
+import BackgroundElements from './components/BackgroundElements.tsx';
+import { Language } from './types.ts';
+import { CONTENT, PROJECTS_DATA } from './constants.ts';
 
 function App() {
   const [lang, setLang] = useState<Language>(Language.EN);
