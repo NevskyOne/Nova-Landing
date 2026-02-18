@@ -6,22 +6,34 @@
     <title>Nova Studio</title>
     
     <!-- FIX: GitHub Pages path resolution -->
-    <base href="./" />
     <script>
       (function() {
+        // Redirect to trailing slash if missing, to ensure relative paths work
         var path = window.location.pathname;
         if (path.length > 1 && !path.endsWith('/') && path.split('/').pop().indexOf('.') === -1) {
-          window.location.replace(window.location.protocol + '//' + window.location.host + path + '/' + window.location.search + window.location.hash);
+          window.location.replace(window.location.href + '/');
         }
       })();
     </script>
 
-    <!-- Global CSS & Fonts -->
-    <link rel="stylesheet" href="index.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Tailwind Config -->
+    <style>
+      :root { --nova-bg: #0B0D12; }
+      body { background-color: var(--nova-bg); color: #f3f4f6; margin: 0; padding: 0; min-height: 100vh; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #0B0D12; }
+      ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #475569; }
+      #root { min-height: 100vh; display: flex; flex-direction: column; }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+    </style>
+
     <script>
       tailwind.config = {
         theme: {
@@ -75,10 +87,8 @@
     </script>
 
     <!-- Runtime Compilation Setup -->
-    <!-- 1. Babel for compiling TSX in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <!-- 2. Import Map for Module Resolution -->
     <script type="importmap">
 {
   "imports": {
@@ -91,8 +101,7 @@
   }
 }
 </script>
-  <link rel="stylesheet" href="/index.css">
-</head>
+  </head>
   <body>
     <div id="root">
       <div style="display: flex; height: 100vh; width: 100vw; align-items: center; justify-content: center; background: #0B0D12; color: #22D3EE; font-family: 'Space Grotesk', sans-serif;">
@@ -104,8 +113,7 @@
       </div>
     </div>
 
-    <!-- 3. App Entry Point with Babel Loader -->
+    <!-- Load the Single File Bundle -->
     <script type="text/babel" data-type="module" data-presets="typescript,react" src="./index.tsx"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>
