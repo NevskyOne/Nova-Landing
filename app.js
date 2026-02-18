@@ -8,18 +8,18 @@ const CONTENT = {
     nav: { home: 'Home', projects: 'Projects', contact: 'Contact', about: 'Studio' },
     hero: {
       title: 'In the dark space we shine for you',
-      subtitle: 'Nova is a student game studio creating immersive, cozy, and experimental experiences.',
-      ctaPrimary: 'Get Warmtail'
+      subtitle: 'Nova is a game studio creating immersive, cozy, and experimental experiences.',
+      ctaPrimary: 'Get our games'
     },
     about: {
       title: 'Who We Are',
       description: 'A team of enthusiasts from Russia, born out of the NTO Olympiad. We believe in games that spark curiosity and bring people together.',
       teamTitle: 'Our Team',
       team: [
-        { role: 'Team Leader, Game Designer, Programmer, Tech Artist' },
-        { role: 'Programmer' },
-        { role: 'Programmer' },
-        { role: '2D Artist' }
+        { role: 'Valentine: Team Leader, Game/Narrative Designer, Programmer, Tech. Artist' },
+        { role: 'Timur: Unity Programmer' },
+        { role: 'Irina: Unity Programmer' },
+        { role: 'Diana: 2D Artist' }
       ]
     },
     projects: { title: 'Our Games', subtitle: 'Experience our latest release.', viewAll: 'View Project', latestRelease: 'Latest Release' },
@@ -28,16 +28,16 @@ const CONTENT = {
   },
   RU: {
     nav: { home: 'Главная', projects: 'Проекты', contact: 'Контакты', about: 'Студия' },
-    hero: { title: 'В темном космосе мы светим для вас', subtitle: 'Nova — студенческая студия, создающая увлекательные и уютные игровые миры.', ctaPrimary: 'Скачать Warmtail' },
+    hero: { title: 'В тёмном космосе мы сияем для вас', subtitle: 'Nova — студия энтузиастов, создающая увлекательные и уютные игровые миры.', ctaPrimary: 'Скачать наши игры' },
     about: {
       title: 'Кто Мы',
       description: 'Команда энтузиастов из России, рождённая из олимпиады НТО. Мы верим в игры, которые пробуждают любопытство.',
       teamTitle: 'Наша Команда',
       team: [
-        { role: 'Тимлид, Геймдизайнер, Программист, Тех. Артист' },
-        { role: 'Программист' },
-        { role: 'Программист' },
-        { role: '2D Художник' }
+        { role: 'Валентин: Тимлид, Геймдизайнер, Сценарист, Программист, Тех. Артист' },
+        { role: 'Тимур: Unity Программист' },
+        { role: 'Ирина: Unity Программист' },
+        { role: 'Диана: 2D Художник' }
       ]
     },
     projects: { title: 'Наши Игры', subtitle: 'Попробуйте наш последний релиз.', viewAll: 'Смотреть Проект', latestRelease: 'Последний релиз' },
@@ -54,7 +54,7 @@ const PROJECTS_DATA = {
     imageUrl: 'https://img.itch.zone/aW1nLzI1NDkyNTk1LnBuZw==/original/cyjCIM.png',
     tags: ['Adventure', 'Cozy', 'Puzzle'],
     links: [
-      { label: 'Download for Windows', url: 'https://github.com/NevskyOne/Warmtail/releases/latest', icon: 'download' },
+      { label: 'Download for Windows', url: '7.ly/awbeuks3', icon: 'download' },
       { label: 'View on Itch.io', url: 'https://nevskyone.itch.io/warmtail', icon: 'itch' }
     ]
   }],
@@ -63,9 +63,9 @@ const PROJECTS_DATA = {
     title: 'Warmtail',
     description: 'Warmtail - это уютная приключенческая игра-головоломка, действие которой разворачивается в нежном подводном мире, медленно замерзающем до смерти. Вы играете за маленького аксолотля — осколка упавшей звезды, способного делиться теплом, растапливать лед и исцелять мир и его обитателей.',
     imageUrl: 'https://img.itch.zone/aW1nLzI1NDkyNTk1LnBuZw==/original/cyjCIM.png',
-    tags: ['Приключение', 'Уют', 'Головоломка'],
+    tags: ['Приключение', 'Уютная', 'Головоломка'],
     links: [
-      { label: 'Скачать для Windows', url: 'https://github.com/NevskyOne/Warmtail/releases/latest', icon: 'download' },
+      { label: 'Скачать для Windows', url: '7.ly/awbeuks3', icon: 'download' },
       { label: 'Смотреть на Itch.io', url: 'https://nevskyone.itch.io/warmtail', icon: 'itch' }
     ]
   }]
@@ -112,12 +112,21 @@ function backgroundElements() {
     <div class="absolute bottom-[25%] left-[10%] text-nova-secondary/20 animate-float-delayed"><div class="w-16 h-16 rounded-2xl border-4 border-current opacity-50 transform -rotate-12 backdrop-blur-sm"></div></div>
     <div class="absolute top-[20%] left-[10%] text-nova-accent/20 animate-float" style="animation-duration:10s">${icon.circle}</div>
 
-    <div class="absolute top-[30%] left-[20%] text-white/40 animate-twinkle" style="animation-delay:0s">${icon.star.replace('w-3 h-3', 'w-3 h-3')}</div>
-    <div class="absolute top-[60%] right-[25%] text-white/30 animate-twinkle" style="animation-delay:1s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</div>
-    <div class="absolute bottom-[40%] left-[40%] text-white/50 animate-twinkle" style="animation-delay:2s">${icon.sparkles}</div>
-    <div class="absolute top-[10%] left-[50%] text-white/20 animate-twinkle" style="animation-delay:1.5s">${icon.star.replace('w-3 h-3', 'w-1.5 h-1.5')}</div>
-    <div class="absolute bottom-[10%] right-[40%] text-white/20 animate-twinkle" style="animation-delay:0.5s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</div>
-    <div class="absolute top-[80%] right-[10%] text-white/30 animate-twinkle" style="animation-delay:3s">${icon.star.replace('w-3 h-3', 'w-3.5 h-3.5')}</div>
+    <div class="absolute top-[30%] left-[20%] star-drift star-drift-slow text-white/40"><span class="animate-twinkle block">${icon.star.replace('w-3 h-3', 'w-3 h-3')}</span></div>
+    <div class="absolute top-[60%] right-[25%] star-drift star-drift-fast text-white/30"><span class="animate-twinkle block" style="animation-delay:1s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
+    <div class="absolute bottom-[40%] left-[40%] star-drift star-drift-mid text-white/50"><span class="animate-twinkle block" style="animation-delay:2s">${icon.sparkles}</span></div>
+    <div class="absolute top-[10%] left-[50%] star-drift star-drift-slow text-white/20"><span class="animate-twinkle block" style="animation-delay:1.5s">${icon.star.replace('w-3 h-3', 'w-1.5 h-1.5')}</span></div>
+    <div class="absolute bottom-[10%] right-[40%] star-drift star-drift-fast text-white/20"><span class="animate-twinkle block" style="animation-delay:0.5s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</span></div>
+    <div class="absolute top-[80%] right-[10%] star-drift star-drift-mid text-white/30"><span class="animate-twinkle block" style="animation-delay:3s">${icon.star.replace('w-3 h-3', 'w-3.5 h-3.5')}</span></div>
+
+    <div class="absolute top-[12%] left-[72%] star-drift star-drift-fast text-white/35"><span class="animate-twinkle block" style="animation-delay:0.8s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
+    <div class="absolute top-[45%] left-[8%] star-drift star-drift-mid text-white/25"><span class="animate-twinkle block" style="animation-delay:2.3s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</span></div>
+    <div class="absolute top-[72%] left-[22%] star-drift star-drift-slow text-white/30"><span class="animate-twinkle block" style="animation-delay:1.2s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
+    <div class="absolute top-[24%] right-[6%] star-drift star-drift-mid text-white/30"><span class="animate-twinkle block" style="animation-delay:1.8s">${icon.sparkles}</span></div>
+    <div class="absolute bottom-[18%] left-[58%] star-drift star-drift-fast text-white/35"><span class="animate-twinkle block" style="animation-delay:2.8s">${icon.star.replace('w-3 h-3', 'w-3 h-3')}</span></div>
+    <div class="absolute top-[54%] right-[44%] star-drift star-drift-slow text-white/20"><span class="animate-twinkle block" style="animation-delay:0.3s">${icon.star.replace('w-3 h-3', 'w-1.5 h-1.5')}</span></div>
+    <div class="absolute bottom-[34%] right-[18%] star-drift star-drift-mid text-white/25"><span class="animate-twinkle block" style="animation-delay:1.1s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
+    <div class="absolute top-[6%] left-[30%] star-drift star-drift-fast text-white/30"><span class="animate-twinkle block" style="animation-delay:3.3s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</span></div>
   </div>`;
 }
 
@@ -154,19 +163,19 @@ function render() {
           <div class="flex space-x-1 bg-white/5 rounded-full p-1 border border-white/5 backdrop-blur-sm">
             <a href="#/" class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${!isProjects ? 'bg-white/10 text-white shadow-[0_0_10px_rgba(34,211,238,0.2)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}">${content.nav.home}</a>
             <a href="#/projects" class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isProjects ? 'bg-white/10 text-white shadow-[0_0_10px_rgba(34,211,238,0.2)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}">${content.nav.projects}</a>
-            <button data-contact class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 text-nova-muted hover:text-white hover:bg-white/5">${content.nav.contact}</button>
+            <button type="button" data-contact class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 text-nova-muted hover:text-white hover:bg-white/5">${content.nav.contact}</button>
           </div>
-          <button data-lang class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-xs font-medium text-nova-muted hover:text-white uppercase tracking-wide backdrop-blur-sm">${icon.globe}<span>${lang}</span></button>
+          <button type="button" data-lang class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-xs font-medium text-nova-muted hover:text-white uppercase tracking-wide backdrop-blur-sm">${icon.globe}<span>${lang}</span></button>
         </div>
-        <div class="md:hidden"><button data-mobile-toggle class="text-gray-300 hover:text-white p-2 rounded-full hover:bg-white/5">${mobileOpen ? icon.close : icon.menu}</button></div>
+        <div class="md:hidden"><button type="button" data-mobile-toggle class="text-gray-300 hover:text-white p-2 rounded-full hover:bg-white/5">${mobileOpen ? icon.close : icon.menu}</button></div>
       </div>
     </div>
     <div class="md:hidden absolute top-24 left-4 right-4 glass-panel rounded-3xl overflow-hidden transition-all duration-300 origin-top ${mobileOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}">
       <div class="px-6 py-8 space-y-6 text-center">
         <a href="#/" class="block text-lg font-medium text-gray-300 hover:text-white">${content.nav.home}</a>
         <a href="#/projects" class="block text-lg font-medium text-gray-300 hover:text-white">${content.nav.projects}</a>
-        <button data-contact class="block w-full text-lg font-medium text-gray-300 hover:text-white">${content.nav.contact}</button>
-        <div class="pt-6 border-t border-white/10 flex justify-center"><button data-lang class="flex items-center space-x-2 text-gray-300 hover:text-white px-4 py-2 rounded-lg bg-white/5">${icon.globe}<span>${lang}</span></button></div>
+        <button type="button" data-contact class="block w-full text-lg font-medium text-gray-300 hover:text-white">${content.nav.contact}</button>
+        <div class="pt-6 border-t border-white/10 flex justify-center"><button type="button" data-lang class="flex items-center space-x-2 text-gray-300 hover:text-white px-4 py-2 rounded-lg bg-white/5">${icon.globe}<span>${lang}</span></button></div>
       </div>
     </div>
   </nav>
@@ -181,7 +190,7 @@ function render() {
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-nova-primary/10 rounded-[100%] blur-[100px] pointer-events-none"></div>
         <div class="max-w-4xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
           <div class="w-full flex justify-center fade-section fade-up" style="transition-delay:100ms"><div class="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mb-12 animate-float"><div class="absolute inset-0 bg-nova-primary/20 blur-[60px] rounded-full animate-pulse-slow"></div><img src="./logo.png" alt="Nova Studio Logo" class="relative z-10 w-full h-full object-contain drop-shadow-[0_0_35px_rgba(34,211,238,0.5)]"></div></div>
-          <div class="fade-section fade-up" style="transition-delay:200ms"><h1 class="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-white mb-8 tracking-tight leading-[1.1]"><span class="block text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">${content.hero.title}</span></h1></div>
+          <div class="fade-section fade-up" style="transition-delay:200ms"><h1 class="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-white mb-8 tracking-tight leading-[1.1]"><span class="block py-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">${content.hero.title}</span></h1></div>
           <div class="fade-section fade-up" style="transition-delay:300ms"><p class="text-lg sm:text-xl text-nova-primary/80 max-w-2xl mx-auto mb-12 leading-relaxed font-light">${content.hero.subtitle}</p></div>
           <div class="fade-section fade-up" style="transition-delay:400ms"><a href="#/projects" class="w-full sm:w-auto px-10 py-4 bg-white text-nova-bg rounded-full font-bold text-lg inline-flex items-center justify-center space-x-2 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] group"><span>${content.hero.ctaPrimary}</span>${icon.arrow}</a></div>
         </div>
@@ -195,17 +204,20 @@ function render() {
 
   <footer class="bg-nova-bg border-t border-white/5 py-12 relative z-10"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row justify-between items-center gap-6"><div class="flex items-center space-x-2"><div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-nova-primary">${icon.gamepad}</div><span class="text-xl font-display font-bold text-white tracking-tight">NOVA</span></div><div class="text-center md:text-right text-sm text-nova-muted">&copy; ${new Date().getFullYear()} ${content.footer.copyright}. ${content.footer.rights}</div></div></div></footer>`;
 
-  app.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', () => {
+  app.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', (event) => {
+    event.preventDefault();
     lang = lang === Language.EN ? Language.RU : Language.EN;
     render();
   }));
 
-  app.querySelector('[data-mobile-toggle]')?.addEventListener('click', () => {
+  app.querySelector('[data-mobile-toggle]')?.addEventListener('click', (event) => {
+    event.preventDefault();
     mobileOpen = !mobileOpen;
     render();
   });
 
-  app.querySelectorAll('[data-contact]').forEach(btn => btn.addEventListener('click', () => {
+  app.querySelectorAll('[data-contact]').forEach(btn => btn.addEventListener('click', (event) => {
+    event.preventDefault();
     if (hashPath().startsWith('/projects')) {
       window.location.hash = '/';
       setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 30);
@@ -213,15 +225,15 @@ function render() {
       document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
     }
     mobileOpen = false;
+    render();
   }));
 
-  mobileOpen = false;
   activateFadeIn();
   updateNavbarScrolled();
 }
 
 function contactSection(content) {
-  return `<section id="contact" class="py-32 relative z-10"><div class="max-w-4xl mx-auto px-6 text-center"><div class="fade-section fade-up"><h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-6">${content.contact.title}</h2><p class="text-xl text-gray-400 mb-16 max-w-2xl mx-auto">${content.contact.subtitle}</p></div><div class="fade-section fade-up" style="transition-delay:100ms"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><a href="mailto:wvwvalli@gmail.com" class="glass-panel p-8 rounded-3xl hover:bg-white/5 transition-all group flex flex-col items-center justify-center border border-white/5 hover:border-nova-primary/30"><div class="w-14 h-14 rounded-full bg-nova-primary/20 text-nova-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">${icon.mail}</div><h3 class="text-lg font-semibold text-white mb-1">${content.contact.emailLabel}</h3><span class="text-gray-400 font-mono text-sm">wvwvalli@gmail.com</span></a><a href="https://t.me/GameDevNova" target="_blank" rel="noopener noreferrer" class="glass-panel p-8 rounded-3xl hover:bg-white/5 transition-all group flex flex-col items-center justify-center border border-white/5 hover:border-nova-secondary/30"><div class="w-14 h-14 rounded-full bg-nova-secondary/20 text-nova-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">${icon.send}</div><h3 class="text-lg font-semibold text-white mb-1">Telegram</h3><span class="text-gray-400 font-mono text-sm">@GameDevNova</span></a></div></div></div></section>`;
+  return `<section id="contact" class="py-32 relative z-10"><div class="max-w-4xl mx-auto px-6 text-center"><div class="fade-section fade-up"><h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-6">${content.contact.title}</h2><p class="text-xl text-gray-400 mb-16 max-w-2xl mx-auto">${content.contact.subtitle}</p></div><div class="fade-section fade-up" style="transition-delay:100ms"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><a href="mailto:wvwvalli@gmail.com" class="glass-panel p-8 rounded-3xl hover:bg-white/5 transition-all group flex flex-col items-center justify-center border border-white/5 hover:border-nova-primary/30"><div class="w-14 h-14 rounded-full bg-nova-primary/20 text-nova-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">${icon.mail}</div><h3 class="text-lg font-display text-white mb-1">${content.contact.emailLabel}</h3><span class="text-gray-400 font-sans text-sm">nova.gamedev.studio@gmail.com</span></a><a href="https://t.me/GameDevNova" target="_blank" rel="noopener noreferrer" class="glass-panel p-8 rounded-3xl hover:bg-white/5 transition-all group flex flex-col items-center justify-center border border-white/5 hover:border-nova-secondary/30"><div class="w-14 h-14 rounded-full bg-nova-secondary/20 text-nova-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">${icon.send}</div><h3 class="text-lg font-display text-white mb-1">Telegram</h3><span class="text-gray-400 font-sans text-sm">@GameDevNova</span></a></div></div></div></section>`;
 }
 
 function activateFadeIn() {
@@ -233,7 +245,10 @@ function activateFadeIn() {
   document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
 }
 
-window.addEventListener('hashchange', render);
+window.addEventListener('hashchange', () => {
+  mobileOpen = false;
+  render();
+});
 window.addEventListener('scroll', () => {
   const newScrolled = window.scrollY > 20;
   if (newScrolled !== scrolled) {
