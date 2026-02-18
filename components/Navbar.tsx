@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink as RouterNavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink as RouterNavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Globe, Gamepad2 } from 'lucide-react';
 import { Language, Content } from '../types';
 
@@ -14,6 +14,7 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
   const [scrolled, setScrolled] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,16 +36,20 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
   const handleScrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
     if (location.pathname !== '/') {
-        // If not on home, we can't just scroll. In a simple setup, we use standard link
-        // but for reliability in restricted envs, we'll navigate home and then scroll
-        window.location.hash = '#/';
+        // Navigate home using react-router instead of window.location
+        navigate('/');
+        // Small delay to allow the Home component to mount before scrolling
         setTimeout(() => {
             const el = document.getElementById('contact');
-            el?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 150);
     } else {
         const el = document.getElementById('contact');
-        el?.scrollIntoView({ behavior: 'smooth' });
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
     }
     setIsOpen(false);
   };
@@ -68,7 +73,10 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
                    src="logo.png" 
                    alt="Nova Logo"
                    className="w-full h-full object-contain relative z-10"
-                   onError={() => setLogoError(true)}
+                   onError={() => {
+                     console.warn("Logo failed to load in Navbar, using fallback.");
+                     setLogoError(true);
+                   }}
                  />
                ) : (
                  <Gamepad2 size={24} className="text-nova-primary relative z-10" />
