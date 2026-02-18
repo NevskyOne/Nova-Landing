@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink as RouterNavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Globe, Gamepad2 } from 'lucide-react';
-import { Language, Content } from '../types';
+import { Language, Content } from '../types.ts';
 
 interface NavbarProps {
   content: Content['nav'];
@@ -36,9 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
   const handleScrollToContact = (e: React.MouseEvent) => {
     e.preventDefault();
     if (location.pathname !== '/') {
-        // Navigate home using react-router instead of window.location
         navigate('/');
-        // Small delay to allow the Home component to mount before scrolling
         setTimeout(() => {
             const el = document.getElementById('contact');
             if (el) {
@@ -65,7 +63,6 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
       >
         <div className="flex items-center justify-between">
           
-          {/* Logo with Fallback */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative w-10 h-10 logo-shine-container rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden">
                {!logoError ? (
@@ -74,7 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
                    alt="Nova Logo"
                    className="w-full h-full object-contain relative z-10"
                    onError={() => {
-                     console.warn("Logo failed to load in Navbar, using fallback.");
+                     console.warn("Logo path resolution failed, using fallback icon.");
                      setLogoError(true);
                    }}
                  />
@@ -85,7 +82,6 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
             <span className="font-display font-bold text-xl tracking-tight text-white group-hover:text-nova-primary transition-colors duration-300 uppercase">NOVA</span>
           </Link>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             <div className="flex space-x-1 bg-white/5 rounded-full p-1 border border-white/5 backdrop-blur-sm">
                 {navLinks.map((link) => (
@@ -116,7 +112,6 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -128,7 +123,6 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div className={`md:hidden absolute top-24 left-4 right-4 glass-panel rounded-3xl overflow-hidden transition-all duration-300 origin-top ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}`}>
         <div className="px-6 py-8 space-y-6 text-center">
           {navLinks.map((link) => (

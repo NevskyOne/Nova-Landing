@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Content } from '../types';
+import { Content } from '../types.ts';
 import { ArrowRight, ChevronDown, Gamepad2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import FadeIn from './FadeIn';
+import FadeIn from './FadeIn.tsx';
 
 interface HeroProps {
   content: Content['hero'];

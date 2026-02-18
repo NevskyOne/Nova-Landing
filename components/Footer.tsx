@@ -1,6 +1,6 @@
 import React from 'react';
 import { Gamepad2 } from 'lucide-react';
-import { Content } from '../types';
+import { Content } from '../types.ts';
 
 interface FooterProps {
   content: Content['footer'];
