@@ -1,0 +1,31 @@
+body { background-color: #0B0D12; color: #f3f4f6; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0B0D12; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.logo-shine-container { position: relative; overflow: hidden; }
+.logo-shine-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transform: skewX(-25deg);
+  animation: shine-logo 6s infinite;
+  pointer-events: none;
+}
+.fade-section { transition: all 700ms ease-out; opacity: 0; }
+.fade-section.visible { opacity: 1; transform: translate(0, 0); }
+.fade-up { transform: translateY(40px); }
+.fade-down { transform: translateY(-40px); }
+.fade-left { transform: translateX(40px); }
+.fade-right { transform: translateX(-40px); }
+.fade-none { transform: none; }
