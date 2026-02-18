@@ -4,11 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nova Studio</title>
-    <!-- 
-      Base tag is crucial for GitHub Pages (https://user.github.io/repo-name/).
-      It ensures relative paths (like index.tsx) resolve correctly.
-    -->
-    <base href="./" />
+    <script>
+      // FIX: GitHub Pages subfolder path resolution
+      // If the URL doesn't end in a slash and isn't a file, redirect to the version with a slash.
+      // This ensures relative paths like "index.tsx" resolve to the subfolder, not the domain root.
+      (function() {
+        var path = window.location.pathname;
+        if (path.length > 1 && !path.endsWith('/') && path.split('/').pop().indexOf('.') === -1) {
+          window.location.replace(window.location.protocol + '//' + window.location.host + path + '/' + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="index.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -64,6 +70,8 @@
       }
     </script>
     <style>
+      body { background-color: #0B0D12; margin: 0; padding: 0; }
+      #root { min-height: 100vh; display: flex; flex-direction: column; }
       .glass-panel {
         background: rgba(255, 255, 255, 0.03);
         backdrop-filter: blur(16px);
@@ -73,25 +81,24 @@
   <script type="importmap">
 {
   "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.574.0"
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root">
-      <div style="display: flex; height: 100vh; width: 100vw; align-items: center; justify-content: center; background: #0B0D12; color: #22D3EE; font-family: sans-serif;">
+      <div style="display: flex; height: 100vh; width: 100vw; align-items: center; justify-content: center; background: #0B0D12; color: #22D3EE; font-family: 'Space Grotesk', sans-serif;">
         <div style="text-align: center;">
-          <p style="font-size: 1.5rem; font-weight: bold; letter-spacing: 0.1em;">NOVA</p>
-          <p style="font-size: 0.8rem; color: #94A3B8; margin-top: 10px;">Initializing studio resources...</p>
+          <p style="font-size: 2rem; font-weight: bold; letter-spacing: 0.2em; margin: 0;">NOVA</p>
+          <div style="width: 40px; height: 2px; background: #22D3EE; margin: 15px auto; opacity: 0.5;"></div>
+          <p style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.1em;">Loading Interface</p>
         </div>
       </div>
     </div>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>
