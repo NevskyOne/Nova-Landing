@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { Content, Project } from '../types.ts';
-import ProjectCard from '../components/ProjectCard.tsx';
-import Contact from '../components/Contact.tsx';
-import FadeIn from '../components/FadeIn.tsx';
+import { Content, Project } from '../types';
+import ProjectCard from '../components/ProjectCard';
+import Contact from '../components/Contact';
+import FadeIn from '../components/FadeIn';
 
 interface ProjectsProps {
   content: Content;

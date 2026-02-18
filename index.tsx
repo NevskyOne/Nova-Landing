@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import App from './App';
 
-console.log('Nova Studio: Initializing application...');
+console.log('Nova Studio: Starting initialization...');
 
 const rootElement = document.getElementById('root');
-if (!rootElement) {
-  console.error("Nova Studio: Target container 'root' not found in index.html");
-  throw new Error("Could not find root element to mount to");
-}
 
-try {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
-  console.log('Nova Studio: Application mounted successfully.');
-} catch (error) {
-  console.error('Nova Studio: Failed to mount application', error);
+if (rootElement) {
+  try {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    );
+    console.log('Nova Studio: Rendered to DOM.');
+  } catch (err) {
+    console.error('Nova Studio: Render error:', err);
+  }
+} else {
+  console.error('Nova Studio: Root element not found.');
 }

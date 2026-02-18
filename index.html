@@ -70,25 +70,13 @@
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
-      .logo-shine-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
-        transform: skewX(-25deg);
-        animation: shine-logo 6s infinite;
-        pointer-events: none;
-      }
     </style>
   <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.4",
-    "react/": "https://esm.sh/react@^19.2.4/",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.574.0"
   }
@@ -97,6 +85,11 @@
 <link rel="stylesheet" href="/index.css">
 </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="display: flex; height: 100vh; width: 100vw; align-items: center; justify-content: center; background: #0B0D12; color: #22D3EE; font-family: sans-serif;">
+        Loading Nova Studio...
+      </div>
+    </div>
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
