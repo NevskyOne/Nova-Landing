@@ -14,4 +14,4 @@ Then open the shown local URL in your browser.
 
 ## Deployment
 
-Deploy `index.html`, `main.js`, `styles.css`, and `logo.png` directly to GitHub Pages.
+Deploy `index.html`, `app.js`, `site.css`, and `logo.png` directly to GitHub Pages.
