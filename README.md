@@ -1,20 +1,17 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Nova Studio Landing (HTML/CSS/JS)
 
-# Run and deploy your AI Studio app
+This version is fully static and does not use TypeScript, React, or Vite.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/drive/15GCDX4FuShQUwrCTSzecxh1gIDvZjQcC
+Because this is a static site, you can run any simple web server:
 
-## Run Locally
+```bash
+npx serve .
+```
 
-**Prerequisites:**  Node.js
+Then open the shown local URL in your browser.
 
+## Deployment
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Deploy `index.html`, `main.js`, `styles.css`, and `logo.png` directly to GitHub Pages.
