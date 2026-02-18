@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { Content } from '../types.ts';
-import { ArrowRight, ChevronDown, Gamepad2 } from 'lucide-react';
+import React from 'react';
+import { Content } from '../types';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import FadeIn from './FadeIn.tsx';
+import FadeIn from './FadeIn';
 
 interface HeroProps {
   content: Content['hero'];
 }
 
 const Hero: React.FC<HeroProps> = ({ content }) => {
-  const [logoError, setLogoError] = useState(false);
-
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       
@@ -19,28 +17,21 @@ const Hero: React.FC<HeroProps> = ({ content }) => {
 
       <div className="max-w-4xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
         
-        {/* Big Main Logo with Fallback */}
+        {/* Big Main Logo */}
         <FadeIn delay={100} direction="up" className="w-full flex justify-center">
-          <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mb-12 animate-float flex items-center justify-center">
+          <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mb-12 animate-float">
              {/* Glow effect behind the logo */}
              <div className="absolute inset-0 bg-nova-primary/20 blur-[60px] rounded-full animate-pulse-slow"></div>
-             
-             {!logoError ? (
-               <img 
-                 src="logo.png" 
-                 alt="Nova Studio Logo" 
-                 className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_35px_rgba(34,211,238,0.5)]"
-                 onError={() => {
-                   console.error("Logo failed to load at logo.png - switching to fallback");
-                   setLogoError(true);
-                 }}
-               />
-             ) : (
-               <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-nova-primary">
-                 <Gamepad2 size={120} className="sm:size-[160px] drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]" />
-                 <span className="mt-4 font-display font-bold text-4xl tracking-[0.2em] text-white">NOVA</span>
-               </div>
-             )}
+             <img 
+               src="./logo.png" 
+               alt="Nova Studio Logo" 
+               className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_35px_rgba(34,211,238,0.5)]"
+               onError={(e) => {
+                 console.error("Logo failed to load at ./logo.png");
+                 // Fallback to text if image fails
+                 e.currentTarget.style.display = 'none';
+               }}
+             />
           </div>
         </FadeIn>
 

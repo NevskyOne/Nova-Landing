@@ -4,36 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nova Studio</title>
-    
-    <!-- FIX: GitHub Pages path resolution -->
-    <script>
-      (function() {
-        // Redirect to trailing slash if missing, to ensure relative paths work
-        var path = window.location.pathname;
-        if (path.length > 1 && !path.endsWith('/') && path.split('/').pop().indexOf('.') === -1) {
-          window.location.replace(window.location.href + '/');
-        }
-      })();
-    </script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <style>
-      :root { --nova-bg: #0B0D12; }
-      body { background-color: var(--nova-bg); color: #f3f4f6; margin: 0; padding: 0; min-height: 100vh; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-      ::-webkit-scrollbar { width: 6px; }
-      ::-webkit-scrollbar-track { background: #0B0D12; }
-      ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-      ::-webkit-scrollbar-thumb:hover { background: #475569; }
-      #root { min-height: 100vh; display: flex; flex-direction: column; }
-      .glass-panel {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-    </style>
-
     <script>
       tailwind.config = {
         theme: {
@@ -44,11 +16,11 @@
             },
             colors: {
               nova: {
-                bg: '#0B0D12',
+                bg: '#0B0D12', // Deep space
                 card: 'rgba(255, 255, 255, 0.03)',
-                primary: '#22D3EE',
-                secondary: '#818CF8',
-                accent: '#C084FC',
+                primary: '#22D3EE', // Cyan (from logo spike)
+                secondary: '#818CF8', // Indigo/Blue
+                accent: '#C084FC', // Purple
                 text: '#E2E8F0',
                 muted: '#94A3B8',
               }
@@ -85,35 +57,73 @@
         },
       }
     </script>
-
-    <!-- Runtime Compilation Setup -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <script type="importmap">
+    <style>
+      body {
+        background-color: #0B0D12;
+        color: #f3f4f6;
+        overflow-x: hidden;
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0B0D12;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+      
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Logo Shine Effect Container */
+      .logo-shine-container {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .logo-shine-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(255, 255, 255, 0.8),
+          transparent
+        );
+        transform: skewX(-25deg);
+        animation: shine-logo 6s infinite;
+        pointer-events: none;
+      }
+    </style>
+  <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.22.0",
-    "lucide-react": "https://esm.sh/lucide-react@0.344.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.574.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0"
   }
 }
 </script>
-  </head>
+<link rel="stylesheet" href="/index.css">
+</head>
   <body>
-    <div id="root">
-      <div style="display: flex; height: 100vh; width: 100vw; align-items: center; justify-content: center; background: #0B0D12; color: #22D3EE; font-family: 'Space Grotesk', sans-serif;">
-        <div style="text-align: center;">
-          <p style="font-size: 2rem; font-weight: bold; letter-spacing: 0.2em; margin: 0;">NOVA</p>
-          <div style="width: 40px; height: 2px; background: #22D3EE; margin: 15px auto; opacity: 0.5;"></div>
-          <p style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.1em;">Loading Interface</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Load the Single File Bundle -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./index.tsx"></script>
-  </body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>

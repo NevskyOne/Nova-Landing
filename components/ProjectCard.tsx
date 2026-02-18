@@ -1,5 +1,5 @@
 import React from 'react';
-import { Project } from '../types.ts';
+import { Project } from '../types';
 import { Download, ExternalLink, Github, Gamepad2 } from 'lucide-react';
 
 interface ProjectCardProps {

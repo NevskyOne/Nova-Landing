@@ -1,10 +1,10 @@
 import React from 'react';
-import { Content, Project } from '../types.ts';
-import Hero from '../components/Hero.tsx';
-import About from '../components/About.tsx';
-import Contact from '../components/Contact.tsx';
-import ProjectCard from '../components/ProjectCard.tsx';
-import FadeIn from '../components/FadeIn.tsx';
+import { Content, Project } from '../types';
+import Hero from '../components/Hero';
+import About from '../components/About';
+import Contact from '../components/Contact';
+import ProjectCard from '../components/ProjectCard';
+import FadeIn from '../components/FadeIn';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -18,6 +18,7 @@ const Home: React.FC<HomeProps> = ({ content, featuredProjects }) => {
     <div className="overflow-x-hidden">
       <Hero content={content.hero} />
       
+      {/* Featured Section - Just Warmtail */}
       <section className="py-20 relative">
         <div className="max-w-5xl mx-auto px-6">
           <FadeIn direction="up">

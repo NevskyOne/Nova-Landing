@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink as RouterNavLink, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Globe, Gamepad2 } from 'lucide-react';
-import { Language, Content } from '../types.ts';
+import { NavLink as RouterNavLink, useLocation } from 'react-router-dom';
+import { Menu, X, Globe } from 'lucide-react';
+import { Language, Content } from '../types';
 
 interface NavbarProps {
   content: Content['nav'];
@@ -12,9 +12,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [logoError, setLogoError] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,26 +29,8 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
   const navLinks = [
     { path: '/', label: content.home },
     { path: '/projects', label: content.projects },
+    { path: '/#contact', label: content.contact },
   ];
-
-  const handleScrollToContact = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (location.pathname !== '/') {
-        navigate('/');
-        setTimeout(() => {
-            const el = document.getElementById('contact');
-            if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 150);
-    } else {
-        const el = document.getElementById('contact');
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-    setIsOpen(false);
-  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
@@ -63,44 +43,33 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
       >
         <div className="flex items-center justify-between">
           
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="relative w-10 h-10 logo-shine-container rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden">
-               {!logoError ? (
-                 <img 
-                   src="logo.png" 
-                   alt="Nova Logo"
-                   className="w-full h-full object-contain relative z-10"
-                   onError={() => {
-                     console.warn("Logo path resolution failed, using fallback icon.");
-                     setLogoError(true);
-                   }}
-                 />
-               ) : (
-                 <Gamepad2 size={24} className="text-nova-primary relative z-10" />
-               )}
+          {/* Logo with PNG and Shine Animation */}
+          <RouterNavLink to="/" className="flex items-center space-x-3 group">
+            <div className="relative w-10 h-10 logo-shine-container rounded-lg flex-shrink-0">
+               <img 
+                 src="./logo.png" 
+                 alt="Nova Logo"
+                 className="w-full h-full object-contain relative z-10"
+                 onError={(e) => { e.currentTarget.style.display = 'none'; }}
+               />
             </div>
             <span className="font-display font-bold text-xl tracking-tight text-white group-hover:text-nova-primary transition-colors duration-300 uppercase">NOVA</span>
-          </Link>
+          </RouterNavLink>
 
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             <div className="flex space-x-1 bg-white/5 rounded-full p-1 border border-white/5 backdrop-blur-sm">
                 {navLinks.map((link) => (
                 <RouterNavLink
                     key={link.path}
-                    to={link.path}
+                    to={link.path.replace('/#', '#')}
                     className={({ isActive }) => 
-                    `px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive ? 'bg-white/10 text-white shadow-[0_0_10px_rgba(34,211,238,0.2)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}`
+                    `px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive && link.path !== '/#contact' ? 'bg-white/10 text-white shadow-[0_0_10px_rgba(34,211,238,0.2)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}`
                     }
                 >
                     {link.label}
                 </RouterNavLink>
                 ))}
-                <button
-                    onClick={handleScrollToContact}
-                    className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 text-nova-muted hover:text-white hover:bg-white/5"
-                >
-                    {content.contact}
-                </button>
             </div>
             
             <button
@@ -112,6 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
             </button>
           </div>
 
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -123,23 +93,18 @@ const Navbar: React.FC<NavbarProps> = ({ content, currentLang, onToggleLang }) =
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <div className={`md:hidden absolute top-24 left-4 right-4 glass-panel rounded-3xl overflow-hidden transition-all duration-300 origin-top ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}`}>
         <div className="px-6 py-8 space-y-6 text-center">
           {navLinks.map((link) => (
-            <Link
+            <RouterNavLink
               key={link.path}
-              to={link.path}
+              to={link.path.replace('/#', '#')}
               className="block text-lg font-medium text-gray-300 hover:text-white"
             >
               {link.label}
-            </Link>
+            </RouterNavLink>
           ))}
-          <button
-            onClick={handleScrollToContact}
-            className="block w-full text-lg font-medium text-gray-300 hover:text-white"
-          >
-            {content.contact}
-          </button>
           <div className="pt-6 border-t border-white/10 flex justify-center">
             <button
               onClick={onToggleLang}

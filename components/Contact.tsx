@@ -1,7 +1,7 @@
 import React from 'react';
-import { Content } from '../types.ts';
+import { Content } from '../types';
 import { Mail, Send } from 'lucide-react';
-import FadeIn from './FadeIn.tsx';
+import FadeIn from './FadeIn';
 
 interface ContactProps {
   content: Content['contact'];

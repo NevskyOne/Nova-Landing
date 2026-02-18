@@ -1,6 +1,6 @@
 import React from 'react';
-import { Content } from '../types.ts';
-import FadeIn from './FadeIn.tsx';
+import { Content } from '../types';
+import FadeIn from './FadeIn';
 import { User } from 'lucide-react';
 
 interface AboutProps {

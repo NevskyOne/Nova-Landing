@@ -1,4 +1,4 @@
-import { Content, Language, Project } from './types.ts';
+import { Content, Language, Project } from './types';
 
 export const CONTENT: Record<Language, Content> = {
   [Language.EN]: {
