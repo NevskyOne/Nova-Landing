@@ -48,8 +48,7 @@ const CONTENT = {
 
 const PROJECTS_DATA = {
   EN: [{
-    id: 'warmtail',
-    title: 'Warmtail',
+    id: 'warmtail', title: 'Warmtail',
     description: 'Warmtail is a cozy top-down puzzle-adventure set in a gentle underwater world slowly freezing to death. You play as a small axolotl — a fragment of a fallen star — able to share warmth, melt ice, and heal both the world and its inhabitants.',
     imageUrl: 'https://img.itch.zone/aW1nLzI1NDkyNTk1LnBuZw==/original/cyjCIM.png',
     tags: ['Adventure', 'Cozy', 'Puzzle'],
@@ -59,8 +58,7 @@ const PROJECTS_DATA = {
     ]
   }],
   RU: [{
-    id: 'warmtail',
-    title: 'Warmtail',
+    id: 'warmtail', title: 'Warmtail',
     description: 'Warmtail - это уютная приключенческая игра-головоломка, действие которой разворачивается в нежном подводном мире, медленно замерзающем до смерти. Вы играете за маленького аксолотля — осколка упавшей звезды, способного делиться теплом, растапливать лед и исцелять мир и его обитателей.',
     imageUrl: 'https://img.itch.zone/aW1nLzI1NDkyNTk1LnBuZw==/original/cyjCIM.png',
     tags: ['Приключение', 'Уют', 'Головоломка'],
@@ -82,43 +80,12 @@ const icon = {
   mail: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>',
   send: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/></svg>',
   gamepad: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M8 12h4M10 10v4"/><circle cx="16" cy="11" r="1"/><circle cx="18" cy="13" r="1"/></svg>',
-  download: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
-  star: '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0"><path d="m12 3.5 2.6 5.27 5.82.85-4.2 4.1.99 5.79L12 16.8l-5.21 2.71.99-5.79-4.2-4.1 5.82-.85L12 3.5z"/></svg>',
-  sparkles: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="m5.64 5.64 2.83 2.83"/><path d="m15.53 15.53 2.83 2.83"/><path d="m5.64 18.36 2.83-2.83"/><path d="m15.53 8.47 2.83-2.83"/></svg>',
-  circle: '<svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/></svg>'
+  download: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>'
 };
 
 function hashPath() {
   const hash = window.location.hash.replace('#', '') || '/';
   return hash.startsWith('/') ? hash : `/${hash}`;
-}
-
-function navShellClass() {
-  return `w-full max-w-5xl transition-all duration-500 ease-in-out border rounded-full ${scrolled ? 'glass-panel shadow-lg shadow-nova-primary/5 py-3 px-6 border-white/10' : 'bg-transparent border-transparent py-4 px-4'}`;
-}
-
-function updateNavbarScrolled() {
-  const shell = document.getElementById('nav-shell');
-  if (shell) shell.className = navShellClass();
-}
-
-function backgroundElements() {
-  return `<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-nova-primary/10 rounded-full blur-[80px] animate-morph mix-blend-screen"></div>
-    <div class="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-nova-accent/10 rounded-full blur-[90px] animate-morph mix-blend-screen" style="animation-delay:-5s"></div>
-    <div class="absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-nova-secondary/10 rounded-full blur-[70px] animate-morph mix-blend-screen" style="animation-delay:-10s"></div>
-
-    <div class="absolute top-[15%] right-[15%] text-nova-primary/20 animate-float">${icon.gamepad.replace('w-5 h-5', 'w-14 h-14')}</div>
-    <div class="absolute bottom-[25%] left-[10%] text-nova-secondary/20 animate-float-delayed"><div class="w-16 h-16 rounded-2xl border-4 border-current opacity-50 transform -rotate-12 backdrop-blur-sm"></div></div>
-    <div class="absolute top-[20%] left-[10%] text-nova-accent/20 animate-float" style="animation-duration:10s">${icon.circle}</div>
-
-    <div class="absolute top-[30%] left-[20%] text-white/40 animate-twinkle" style="animation-delay:0s">${icon.star.replace('w-3 h-3', 'w-3 h-3')}</div>
-    <div class="absolute top-[60%] right-[25%] text-white/30 animate-twinkle" style="animation-delay:1s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</div>
-    <div class="absolute bottom-[40%] left-[40%] text-white/50 animate-twinkle" style="animation-delay:2s">${icon.sparkles}</div>
-    <div class="absolute top-[10%] left-[50%] text-white/20 animate-twinkle" style="animation-delay:1.5s">${icon.star.replace('w-3 h-3', 'w-1.5 h-1.5')}</div>
-    <div class="absolute bottom-[10%] right-[40%] text-white/20 animate-twinkle" style="animation-delay:0.5s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</div>
-    <div class="absolute top-[80%] right-[10%] text-white/30 animate-twinkle" style="animation-delay:3s">${icon.star.replace('w-3 h-3', 'w-3.5 h-3.5')}</div>
-  </div>`;
 }
 
 function projectCard(project) {
@@ -145,9 +112,14 @@ function render() {
   const isProjects = path.startsWith('/projects');
 
   app.innerHTML = `
-  ${backgroundElements()}
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-nova-primary/10 rounded-full blur-[80px] animate-morph mix-blend-screen"></div>
+    <div class="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-nova-accent/10 rounded-full blur-[90px] animate-morph mix-blend-screen" style="animation-delay:-5s"></div>
+    <div class="absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-nova-secondary/10 rounded-full blur-[70px] animate-morph mix-blend-screen" style="animation-delay:-10s"></div>
+  </div>
+
   <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
-    <div id="nav-shell" class="${navShellClass()}">
+    <div class="w-full max-w-5xl transition-all duration-500 ease-in-out border rounded-full ${scrolled ? 'glass-panel shadow-lg shadow-nova-primary/5 py-3 px-6 border-white/10' : 'bg-transparent border-transparent py-4 px-4'}">
       <div class="flex items-center justify-between">
         <a href="#/" class="flex items-center space-x-3 group"><div class="relative w-10 h-10 logo-shine-container rounded-lg flex-shrink-0"><img src="./logo.png" alt="Nova Logo" class="w-full h-full object-contain relative z-10" /></div><span class="font-display font-bold text-xl tracking-tight text-white group-hover:text-nova-primary transition-colors duration-300 uppercase">NOVA</span></a>
         <div class="hidden md:flex items-center space-x-8">
@@ -217,7 +189,6 @@ function render() {
 
   mobileOpen = false;
   activateFadeIn();
-  updateNavbarScrolled();
 }
 
 function contactSection(content) {
@@ -226,9 +197,7 @@ function contactSection(content) {
 
 function activateFadeIn() {
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
 }
@@ -238,10 +207,9 @@ window.addEventListener('scroll', () => {
   const newScrolled = window.scrollY > 20;
   if (newScrolled !== scrolled) {
     scrolled = newScrolled;
-    updateNavbarScrolled();
+    render();
   }
 });
 
 if (!window.location.hash) window.location.hash = '/';
-scrolled = window.scrollY > 20;
 render();
