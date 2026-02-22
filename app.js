@@ -1,8 +1,12 @@
 const Language = { EN: 'EN', RU: 'RU' };
-let lang = navigator.language === "ru-RU"? Language.RU:Language.EN;
+let lang = navigator.language === "ru-RU" ? Language.RU : Language.EN;
 let mobileOpen = false;
 let scrolled = false;
-console.log(navigator.language);
+
+let mouseX = 0;
+let mouseY = 0;
+
+// === IMAGES & OFFSETS CONFIGURATION ===
 const CONTENT = {
   EN: {
     nav: { home: 'Home', projects: 'Projects', contact: 'Contact', about: 'Studio' },
@@ -14,16 +18,16 @@ const CONTENT = {
     about: {
       title: 'Who We Are',
       description: 'A team of enthusiasts from Russia, born out of the NTO Olympiad. We believe in games that spark curiosity and bring people together.',
-      teamTitle: 'Our Team',
+      teamTitle: 'Meet The Core',
       team: [
-        { role: 'Valentine: Team Leader, Game/Narrative Designer, Programmer, Tech. Artist' },
-        { role: 'Timur: Unity Programmer' },
-        { role: 'Irina: Unity Programmer' },
-        { role: 'Diana: 2D Artist' }
+        { name: 'Valentine', role: 'Team Leader, Game/Narrative Designer, Programmer, Tech. Artist', image: './v.jpg', offset: '50% 10%' },
+        { name: 'Timur', role: 'Unity Programmer', image: './t.jpg', offset: '50% 100%' },
+        { name: 'Irina', role: 'Unity Programmer', image: './i.jpg', offset: '50% 20%' },
+        { name: 'Diana', role: '2D Artist', image: './d.jpg', offset: '50% 25%' }
       ]
     },
-    projects: { title: 'Our Games', subtitle: 'Experience our latest release.', viewAll: 'View Project', latestRelease: 'Latest Release' },
-    contact: { title: 'Get in Touch', subtitle: 'Reach out to us for collaborations or just subscribe to our media', emailLabel: 'Email Us', socialLabel: 'Socials' },
+    projects: { title: 'Our Games', subtitle: 'Experience our latest releases crafted with passion.', viewAll: 'View Project', latestRelease: 'Latest Release' },
+    contact: { title: 'Get in Touch', subtitle: 'Reach out to us for collaborations or just subscribe to our media channels', emailLabel: 'Email Us', socialLabel: 'Socials' },
     footer: { copyright: 'Nova Studio', rights: 'All rights reserved.' }
   },
   RU: {
@@ -31,16 +35,16 @@ const CONTENT = {
     hero: { title: 'В тёмном космосе мы сияем для вас', subtitle: 'Nova — студия энтузиастов, создающая увлекательные и уютные игровые миры.', ctaPrimary: 'Скачать наши игры' },
     about: {
       title: 'Кто Мы',
-      description: 'Команда энтузиастов из России, рождённая из олимпиады НТО. Мы верим в игры, которые пробуждают любопытство.',
+      description: 'Команда энтузиастов из России, рождённая из олимпиады НТО. Мы верим в игры, которые пробуждают любопытство и объединяют.',
       teamTitle: 'Наша Команда',
       team: [
-        { role: 'Валентин: Тимлид, Геймдизайнер, Сценарист, Программист, Тех. Артист' },
-        { role: 'Тимур: Unity Программист' },
-        { role: 'Ирина: Unity Программист' },
-        { role: 'Диана: 2D Художник' }
+        { name: 'Валентин', role: 'Тимлид, Геймдизайнер, Сценарист, Программист, Тех. Артист', image: './v.jpg', offset: '50% 10%' },
+        { name: 'Тимур', role: 'Unity Программист', image: './t.jpg', offset: '50% 100%' },
+        { name: 'Ирина', role: 'Unity Программист', image: './i.jpg', offset: '50% 20%' },
+        { name: 'Диана', role: '2D Художник', image: './d.jpg', offset: '50% 25%' }
       ]
     },
-    projects: { title: 'Наши Игры', subtitle: 'Попробуйте наш последний релиз.', viewAll: 'Смотреть Проект', latestRelease: 'Последний релиз' },
+    projects: { title: 'Наши Игры', subtitle: 'Попробуйте наш последний релиз, созданный с душой.', viewAll: 'Смотреть Проект', latestRelease: 'Последний релиз' },
     contact: { title: 'Свяжитесь с нами', subtitle: 'Напишите нам для сотрудничества или подпишитесь на наши соцсети', emailLabel: 'Почта', socialLabel: 'Соцсети' },
     footer: { copyright: 'Nova Studio', rights: 'Все права защищены.' }
   }
@@ -78,14 +82,15 @@ const icon = {
   menu: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
   close: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 6-12 12M6 6l12 12"/></svg>',
   down: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>',
-  user: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21a7 7 0 0 0-14 0"/><circle cx="12" cy="7" r="4"/></svg>',
   mail: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>',
   send: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/></svg>',
   gamepad: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M8 12h4M10 10v4"/><circle cx="16" cy="11" r="1"/><circle cx="18" cy="13" r="1"/></svg>',
   download: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
   star: '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0"><path d="m12 3.5 2.6 5.27 5.82.85-4.2 4.1.99 5.79L12 16.8l-5.21 2.71.99-5.79-4.2-4.1 5.82-.85L12 3.5z"/></svg>',
   sparkles: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="m5.64 5.64 2.83 2.83"/><path d="m15.53 15.53 2.83 2.83"/><path d="m5.64 18.36 2.83-2.83"/><path d="m15.53 8.47 2.83-2.83"/></svg>',
-  circle: '<svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/></svg>'
+  circle: '<svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/></svg>',
+  chevronLeft: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>',
+  chevronRight: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>'
 };
 
 function hashPath() {
@@ -94,7 +99,7 @@ function hashPath() {
 }
 
 function navShellClass() {
-  return `w-full max-w-5xl transition-all duration-500 ease-in-out border rounded-full ${scrolled ? 'glass-panel shadow-lg shadow-nova-primary/5 py-3 px-6 border-white/10' : 'bg-transparent border-transparent py-4 px-4'}`;
+  return `w-full transition-all duration-700 ease-fluid border rounded-full ${scrolled ? 'glass-panel py-3 px-6 border-white/10 shadow-lg shadow-black/50' : 'bg-transparent border-transparent py-4 px-4'}`;
 }
 
 function updateNavbarScrolled() {
@@ -102,49 +107,197 @@ function updateNavbarScrolled() {
   if (shell) shell.className = navShellClass();
 }
 
+window.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 30;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 30;
+  document.documentElement.style.setProperty('--mouse-x', mouseX);
+  document.documentElement.style.setProperty('--mouse-y', mouseY);
+});
+
+// GLOBAL BACKGROUND ELEMENTS (Ensures continuity across sections)
 function backgroundElements() {
-  return `<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-nova-primary/10 rounded-full blur-[80px] animate-morph mix-blend-screen"></div>
-    <div class="absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-nova-accent/10 rounded-full blur-[90px] animate-morph mix-blend-screen" style="animation-delay:-5s"></div>
-    <div class="absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-nova-secondary/10 rounded-full blur-[70px] animate-morph mix-blend-screen" style="animation-delay:-10s"></div>
+  return `
+  <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+    <!-- Main Blobs -->
+    <div class="parallax-layer absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-nova-primary/10 rounded-full blur-[100px] animate-morph mix-blend-screen" data-speed="1.5"></div>
+    <div class="parallax-layer absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-nova-accent/10 rounded-full blur-[120px] animate-morph mix-blend-screen" style="animation-delay:-5s" data-speed="-1"></div>
+    <div class="parallax-layer absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-nova-secondary/10 rounded-full blur-[90px] animate-morph mix-blend-screen" style="animation-delay:-10s" data-speed="2"></div>
+    
+    <!-- Moved this blob here from "About" section to fix the cut-off gap issue -->
+    <div class="parallax-layer absolute top-[60%] left-[-10%] w-[500px] h-[500px] bg-nova-accent/10 rounded-full blur-[120px] mix-blend-screen" data-speed="1"></div>
 
-    <div class="absolute top-[15%] right-[15%] text-nova-primary/20 animate-float">${icon.gamepad.replace('w-5 h-5', 'w-14 h-14')}</div>
-    <div class="absolute bottom-[25%] left-[10%] text-nova-secondary/20 animate-float-delayed"><div class="w-16 h-16 rounded-2xl border-4 border-current opacity-50 transform -rotate-12 backdrop-blur-sm"></div></div>
-    <div class="absolute top-[20%] left-[10%] text-nova-accent/20 animate-float" style="animation-duration:10s">${icon.circle}</div>
+    <!-- Floating Icons -->
+    <div class="parallax-layer absolute top-[15%] right-[15%] text-nova-primary/20 animate-float" data-speed="-2">${icon.gamepad.replace('w-5 h-5', 'w-14 h-14')}</div>
+    <div class="parallax-layer absolute bottom-[25%] left-[10%] text-nova-secondary/20 animate-float-delayed" data-speed="1.2"><div class="w-16 h-16 rounded-2xl border-4 border-current opacity-50 transform -rotate-12 backdrop-blur-sm"></div></div>
+    <div class="parallax-layer absolute top-[20%] left-[10%] text-nova-accent/20 animate-float" style="animation-duration:10s" data-speed="2">${icon.circle}</div>
 
+    <!-- Stars -->
     <div class="absolute top-[30%] left-[20%] star-drift star-drift-slow text-white/40"><span class="animate-twinkle block">${icon.star.replace('w-3 h-3', 'w-3 h-3')}</span></div>
     <div class="absolute top-[60%] right-[25%] star-drift star-drift-fast text-white/30"><span class="animate-twinkle block" style="animation-delay:1s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
     <div class="absolute bottom-[40%] left-[40%] star-drift star-drift-mid text-white/50"><span class="animate-twinkle block" style="animation-delay:2s">${icon.sparkles}</span></div>
     <div class="absolute top-[10%] left-[50%] star-drift star-drift-slow text-white/20"><span class="animate-twinkle block" style="animation-delay:1.5s">${icon.star.replace('w-3 h-3', 'w-1.5 h-1.5')}</span></div>
-    <div class="absolute bottom-[10%] right-[40%] star-drift star-drift-fast text-white/20"><span class="animate-twinkle block" style="animation-delay:0.5s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</span></div>
-    <div class="absolute top-[80%] right-[10%] star-drift star-drift-mid text-white/30"><span class="animate-twinkle block" style="animation-delay:3s">${icon.star.replace('w-3 h-3', 'w-3.5 h-3.5')}</span></div>
-
-    <div class="absolute top-[12%] left-[72%] star-drift star-drift-fast text-white/35"><span class="animate-twinkle block" style="animation-delay:0.8s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
-    <div class="absolute top-[45%] left-[8%] star-drift star-drift-mid text-white/25"><span class="animate-twinkle block" style="animation-delay:2.3s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</span></div>
-    <div class="absolute top-[72%] left-[22%] star-drift star-drift-slow text-white/30"><span class="animate-twinkle block" style="animation-delay:1.2s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
-    <div class="absolute top-[24%] right-[6%] star-drift star-drift-mid text-white/30"><span class="animate-twinkle block" style="animation-delay:1.8s">${icon.sparkles}</span></div>
-    <div class="absolute bottom-[18%] left-[58%] star-drift star-drift-fast text-white/35"><span class="animate-twinkle block" style="animation-delay:2.8s">${icon.star.replace('w-3 h-3', 'w-3 h-3')}</span></div>
-    <div class="absolute top-[54%] right-[44%] star-drift star-drift-slow text-white/20"><span class="animate-twinkle block" style="animation-delay:0.3s">${icon.star.replace('w-3 h-3', 'w-1.5 h-1.5')}</span></div>
-    <div class="absolute bottom-[34%] right-[18%] star-drift star-drift-mid text-white/25"><span class="animate-twinkle block" style="animation-delay:1.1s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
-    <div class="absolute top-[6%] left-[30%] star-drift star-drift-fast text-white/30"><span class="animate-twinkle block" style="animation-delay:3.3s">${icon.star.replace('w-3 h-3', 'w-2.5 h-2.5')}</span></div>
   </div>`;
 }
 
 function projectCard(project) {
-  return `<div class="glass-panel rounded-3xl overflow-hidden p-1 group hover:border-nova-primary/30 transition-colors duration-500">
-    <div class="relative rounded-[20px] overflow-hidden aspect-[16/9] mb-6">
-      <img src="${project.imageUrl}" alt="${project.title}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-      <div class="absolute bottom-4 left-4 flex flex-wrap gap-2">${project.tags.map(tag => `<span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-black/50 text-white backdrop-blur-md border border-white/10">${tag}</span>`).join('')}</div>
+  return `
+  <div class="glass-panel glass-panel-hover rounded-[2rem] overflow-hidden p-2 group relative">
+    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem] pointer-events-none"></div>
+    <div class="relative rounded-[1.5rem] overflow-hidden aspect-[16/9] mb-6">
+      <img src="${project.imageUrl}" alt="${project.title}" class="w-full h-full object-cover transform group-hover:scale-105 group-hover:rotate-1 transition-all duration-700 ease-fluid" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80"></div>
+      <div class="absolute bottom-5 left-5 right-5 flex flex-wrap gap-2 z-10">
+        ${project.tags.map(tag => `<span class="text-xs font-semibold px-4 py-1.5 rounded-full bg-black/40 text-white backdrop-blur-md border border-white/10 shadow-lg">${tag}</span>`).join('')}
+      </div>
     </div>
-    <div class="px-5 pb-6">
-      <h3 class="text-3xl font-display font-bold text-white mb-3">${project.title}</h3>
+    <div class="px-6 pb-6 relative z-10">
+      <h3 class="text-3xl font-display font-bold text-white mb-3 group-hover:text-nova-primary transition-colors">${project.title}</h3>
       <p class="text-gray-400 text-base mb-8 leading-relaxed">${project.description}</p>
-      <div class="flex flex-col sm:flex-row gap-3">
-        ${project.links.map((link, idx) => `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl font-medium transition-all duration-300 ${idx === 0 ? 'bg-gradient-to-r from-nova-primary to-nova-secondary text-white hover:shadow-lg hover:shadow-nova-primary/25 hover:-translate-y-0.5' : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/5'}">${link.icon === 'download' ? icon.download : icon.gamepad}<span>${link.label}</span></a>`).join('')}
+      <div class="flex flex-col sm:flex-row gap-4">
+        ${project.links.map((link, idx) => `
+          <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="flex-1 flex items-center justify-center space-x-2 px-6 py-4 rounded-xl font-medium transition-all duration-300 ease-fluid active:scale-95 ${idx === 0 ? 'bg-gradient-to-r from-nova-primary to-nova-secondary text-white hover:shadow-[0_0_25px_rgba(34,211,238,0.4)] hover:-translate-y-1' : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/10 hover:border-white/30'}">
+            ${link.icon === 'download' ? icon.download : icon.gamepad}
+            <span>${link.label}</span>
+          </a>
+        `).join('')}
       </div>
     </div>
   </div>`;
+}
+
+// Carousel Structure
+function renderTeamCarousel(content) {
+  return `
+  <div class="relative w-full mt-10 group/carousel">
+    <!-- Desktop Specific Arrows -->
+    <div class="absolute -left-6 top-1/2 -translate-y-1/2 z-20 hidden md:flex opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300">
+      <button id="btn-prev" class="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white/10 hover:text-nova-primary hover:scale-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+        ${icon.chevronLeft}
+      </button>
+    </div>
+    <div class="absolute -right-6 top-1/2 -translate-y-1/2 z-20 hidden md:flex opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300">
+      <button id="btn-next" class="w-14 h-14 rounded-full glass-panel flex items-center justify-center text-white hover:bg-white/10 hover:text-nova-primary hover:scale-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+        ${icon.chevronRight}
+      </button>
+    </div>
+
+    <!-- M3 Track -->
+    <div id="team-carousel-track" class="m3-carousel-track hide-scrollbar pb-10 pt-4">
+      ${content.about.team.map((member, i) => `
+        <div class="m3-card relative rounded-[2.5rem] group/card bg-nova-bg/50 fade-section fade-up select-none h-[380px] sm:h-[450px]">
+          
+          <!-- Photo Backing with Custom Offset -->
+          <img src="${member.image}" 
+               style="object-position: ${member.offset || 'center center'};"
+               alt="${member.name}" 
+               class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover/card:scale-105 pointer-events-none" />
+               
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-90 pointer-events-none"></div>
+          
+          <!-- Glassmorphic Info Box -->
+          <div class="info-box absolute bottom-5 left-5 right-5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 p-4 sm:p-5 shadow-xl pointer-events-none">
+            <h4 class="text-xl sm:text-2xl font-display font-bold text-white mb-1 tracking-wide truncate">${member.name}</h4>
+            <p class="text-xs sm:text-sm text-gray-300 font-medium leading-snug line-clamp-2">${member.role}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+// Robust Multi-browse State Engine
+let currentActiveIndex = 0;
+
+function initCarousel() {
+  const track = document.getElementById('team-carousel-track');
+  if (!track) return;
+
+  const cards = Array.from(track.querySelectorAll('.m3-card'));
+  const btnNext = document.getElementById('btn-next');
+  const btnPrev = document.getElementById('btn-prev');
+  const N = cards.length;
+
+  function updateCarousel(activeIndex) {
+    currentActiveIndex = activeIndex;
+    // Calculate sliding window to keep exactly 3 items visible at all times
+    const startIndex = Math.max(0, Math.min(activeIndex - 1, N - 3));
+
+    cards.forEach((card, index) => {
+      card.classList.remove('is-active', 'is-side', 'is-hidden');
+
+      if (index >= startIndex && index <= startIndex + 2) {
+        if (index === activeIndex) {
+          card.classList.add('is-active');
+        } else {
+          card.classList.add('is-side');
+        }
+      } else {
+        card.classList.add('is-hidden');
+      }
+    });
+
+    // Update arrows availability
+    if (btnPrev) {
+      btnPrev.style.opacity = currentActiveIndex === 0 ? '0.3' : '1';
+      btnPrev.style.pointerEvents = currentActiveIndex === 0 ? 'none' : 'auto';
+    }
+    if (btnNext) {
+      btnNext.style.opacity = currentActiveIndex === N - 1 ? '0.3' : '1';
+      btnNext.style.pointerEvents = currentActiveIndex === N - 1 ? 'none' : 'auto';
+    }
+  }
+
+  // Click card to make it active (Only operates the flex layout on Desktop)
+  cards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+      if (window.innerWidth >= 768) {
+        updateCarousel(index);
+      }
+    });
+  });
+
+  if (btnNext) btnNext.addEventListener('click', () => {
+    if (currentActiveIndex < N - 1) updateCarousel(currentActiveIndex + 1);
+  });
+
+  if (btnPrev) btnPrev.addEventListener('click', () => {
+    if (currentActiveIndex > 0) updateCarousel(currentActiveIndex - 1);
+  });
+
+  // Kickstart
+  updateCarousel(currentActiveIndex);
+}
+
+function contactSection(content) {
+  return `
+  <section id="contact" class="py-24 relative z-10">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="fade-section fade-zoom">
+        <h2 class="text-4xl sm:text-6xl font-display font-bold text-white mb-6 tracking-tight">${content.contact.title}</h2>
+        <p class="text-xl text-gray-400 mb-16 max-w-2xl mx-auto font-light">${content.contact.subtitle}</p>
+      </div>
+      <div class="fade-section fade-up" style="transition-delay:150ms">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a href="mailto:nova.gamedev.studio@gmail.com" class="glass-panel glass-panel-hover p-10 rounded-[2.5rem] flex flex-col items-center justify-center relative overflow-hidden group active:scale-95 transition-transform">
+            <div class="absolute inset-0 bg-nova-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="w-16 h-16 rounded-2xl bg-nova-primary/20 text-nova-primary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 ease-fluid shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+              ${icon.mail}
+            </div>
+            <h3 class="text-2xl font-display text-white mb-2 relative z-10">${content.contact.emailLabel}</h3>
+            <span class="text-nova-primary font-medium tracking-wide relative z-10">nova.gamedev.studio@gmail.com</span>
+          </a>
+          <a href="https://t.me/GameDevNova" target="_blank" rel="noopener noreferrer" class="glass-panel glass-panel-hover p-10 rounded-[2.5rem] flex flex-col items-center justify-center relative overflow-hidden group active:scale-95 transition-transform">
+            <div class="absolute inset-0 bg-nova-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="w-16 h-16 rounded-2xl bg-nova-secondary/20 text-nova-secondary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 ease-fluid shadow-[0_0_20px_rgba(129,140,248,0.2)]">
+              ${icon.send}
+            </div>
+            <h3 class="text-2xl font-display text-white mb-2 relative z-10">Telegram</h3>
+            <span class="text-nova-secondary font-medium tracking-wide relative z-10">@GameDevNova</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>`;
 }
 
 function render() {
@@ -155,100 +308,235 @@ function render() {
 
   app.innerHTML = `
   ${backgroundElements()}
-  <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
-    <div id="nav-shell" class="${navShellClass()}">
+  
+  <!-- Fixed Header -->
+  <div class="fixed top-6 left-1/2 -translate-x-1/2 w-full max-w-5xl px-4 z-[100]">
+    <nav id="nav-shell" class="${navShellClass()}">
       <div class="flex items-center justify-between">
-        <a href="#/" class="flex items-center space-x-3 group"><div class="relative w-10 h-10 logo-shine-container rounded-lg flex-shrink-0"><img src="./logo.png" alt="Nova Logo" class="w-full h-full object-contain relative z-10" /></div><span class="font-display font-bold text-xl tracking-tight text-white group-hover:text-nova-primary transition-colors duration-300 uppercase">NOVA</span></a>
-        <div class="hidden md:flex items-center space-x-8">
-          <div class="flex space-x-1 bg-white/5 rounded-full p-1 border border-white/5 backdrop-blur-sm">
-            <a href="#/" class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${!isProjects ? 'bg-white/10 text-white shadow-[0_0_10px_rgba(34,211,238,0.2)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}">${content.nav.home}</a>
-            <a href="#/projects" class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isProjects ? 'bg-white/10 text-white shadow-[0_0_10px_rgba(34,211,238,0.2)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}">${content.nav.projects}</a>
-            <button type="button" data-contact class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 text-nova-muted hover:text-white hover:bg-white/5">${content.nav.contact}</button>
+        <a href="#/" class="nav-link flex items-center space-x-3 group active:scale-95 transition-transform">
+          <div class="relative w-10 h-10 logo-shine-container rounded-lg flex-shrink-0">
+            <img src="./logo.png" alt="Nova Logo" class="w-full h-full object-contain relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
           </div>
-          <button type="button" data-lang class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-xs font-medium text-nova-muted hover:text-white uppercase tracking-wide backdrop-blur-sm">${icon.globe}<span>${lang}</span></button>
+          <span class="font-display font-bold text-xl tracking-tight text-white group-hover:text-nova-primary transition-colors duration-300 uppercase">NOVA</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <div class="flex space-x-1 bg-white/5 rounded-full p-1.5 border border-white/10 backdrop-blur-md shadow-lg">
+            <a href="#/" class="nav-link px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ease-fluid active:scale-95 ${!isProjects ? 'bg-white/10 text-white shadow-[0_0_15px_rgba(34,211,238,0.3)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}">${content.nav.home}</a>
+            <a href="#/projects" class="nav-link px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ease-fluid active:scale-95 ${isProjects ? 'bg-white/10 text-white shadow-[0_0_15px_rgba(34,211,238,0.3)]' : 'text-nova-muted hover:text-white hover:bg-white/5'}">${content.nav.projects}</a>
+            <button type="button" data-contact class="px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ease-fluid active:scale-95 text-nova-muted hover:text-white hover:bg-white/5">${content.nav.contact}</button>
+          </div>
+          <button type="button" data-lang class="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 border border-white/10 transition-all text-xs font-bold text-gray-300 hover:text-white uppercase tracking-wide backdrop-blur-sm shadow-md">${icon.globe}<span>${lang}</span></button>
         </div>
-        <div class="md:hidden"><button type="button" data-mobile-toggle class="text-gray-300 hover:text-white p-2 rounded-full hover:bg-white/5">${mobileOpen ? icon.close : icon.menu}</button></div>
+        <div class="md:hidden">
+          <button type="button" id="mobile-toggle-btn" class="text-gray-300 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors">
+             <span id="mobile-toggle-icon">${mobileOpen ? icon.close : icon.menu}</span>
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="md:hidden absolute top-24 left-4 right-4 glass-panel rounded-3xl overflow-hidden transition-all duration-300 origin-top ${mobileOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-4 pointer-events-none'}">
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden absolute top-20 left-4 right-4 glass-panel rounded-3xl overflow-hidden transition-all duration-500 ease-fluid origin-top opacity-0 scale-95 -translate-y-4 pointer-events-none">
       <div class="px-6 py-8 space-y-6 text-center">
-        <a href="#/" class="block text-lg font-medium text-gray-300 hover:text-white">${content.nav.home}</a>
-        <a href="#/projects" class="block text-lg font-medium text-gray-300 hover:text-white">${content.nav.projects}</a>
-        <button type="button" data-contact class="block w-full text-lg font-medium text-gray-300 hover:text-white">${content.nav.contact}</button>
-        <div class="pt-6 border-t border-white/10 flex justify-center"><button type="button" data-lang class="flex items-center space-x-2 text-gray-300 hover:text-white px-4 py-2 rounded-lg bg-white/5">${icon.globe}<span>${lang}</span></button></div>
+        <a href="#/" class="nav-link block text-xl font-bold text-gray-300 hover:text-white">${content.nav.home}</a>
+        <a href="#/projects" class="nav-link block text-xl font-bold text-gray-300 hover:text-white">${content.nav.projects}</a>
+        <button type="button" data-contact class="block w-full text-xl font-bold text-gray-300 hover:text-white">${content.nav.contact}</button>
+        <div class="pt-6 border-t border-white/10 flex justify-center">
+          <button type="button" data-lang class="flex items-center space-x-2 text-gray-300 hover:text-white px-6 py-3 rounded-full bg-white/10 font-bold">${icon.globe}<span>${lang}</span></button>
+        </div>
       </div>
     </div>
-  </nav>
+  </div>
 
   <main class="flex-grow relative z-10">
-    ${isProjects ? `<div class="min-h-screen pt-32">
-      <div class="max-w-7xl mx-auto px-6 mb-20 text-center fade-section fade-up"><h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-6">${content.projects.title}</h1><p class="text-xl text-gray-400 max-w-2xl mx-auto">${content.projects.subtitle}</p></div>
-      <div class="max-w-5xl mx-auto px-6 mb-32 fade-section fade-up" style="transition-delay:100ms">${projects.map(projectCard).join('')}</div>
+    ${isProjects ? `
+    <div class="min-h-screen pt-40">
+      <div class="max-w-7xl mx-auto px-6 mb-20 text-center fade-section fade-up">
+        <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-6 tracking-tight">${content.projects.title}</h1>
+        <p class="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto font-light">${content.projects.subtitle}</p>
+      </div>
+      <div class="max-w-5xl mx-auto px-6 mb-20 fade-section fade-up" style="transition-delay:150ms">
+        ${projects.map(projectCard).join('')}
+      </div>
       ${contactSection(content)}
-    </div>` : `<div class="overflow-x-hidden">
-      <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-nova-primary/10 rounded-[100%] blur-[100px] pointer-events-none"></div>
-        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-          <div class="w-full flex justify-center fade-section fade-up" style="transition-delay:100ms"><div class="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mb-12 animate-float"><div class="absolute inset-0 bg-nova-primary/20 blur-[60px] rounded-full animate-pulse-slow"></div><img src="./logo.png" alt="Nova Studio Logo" class="relative z-10 w-full h-full object-contain drop-shadow-[0_0_35px_rgba(34,211,238,0.5)]"></div></div>
-          <div class="fade-section fade-up" style="transition-delay:200ms"><h1 class="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-white mb-8 tracking-tight leading-[1.1]"><span class="block py-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70">${content.hero.title}</span></h1></div>
-          <div class="fade-section fade-up" style="transition-delay:300ms"><p class="text-lg sm:text-xl text-nova-primary/80 max-w-2xl mx-auto mb-12 leading-relaxed font-light">${content.hero.subtitle}</p></div>
-          <div class="fade-section fade-up" style="transition-delay:400ms"><a href="#/projects" class="w-full sm:w-auto px-10 py-4 bg-white text-nova-bg rounded-full font-bold text-lg inline-flex items-center justify-center space-x-2 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] group"><span>${content.hero.ctaPrimary}</span>${icon.arrow}</a></div>
+    </div>` : `
+    <div class="overflow-x-hidden">
+      <!-- Hero -->
+      <section class="relative min-h-screen flex items-center justify-center pt-20 pb-10 overflow-hidden">
+        <div class="parallax-layer absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-nova-primary/10 rounded-[100%] blur-[120px] pointer-events-none" data-speed="0.5"></div>
+        <div class="max-w-5xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
+          <div class="w-full flex justify-center fade-section fade-zoom" style="transition-delay:50ms">
+            <div class="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 mb-8 animate-float group cursor-pointer">
+              <div class="absolute inset-0 bg-nova-primary/20 blur-[80px] rounded-full animate-pulse-slow group-hover:bg-nova-primary/30 transition-colors duration-500"></div>
+              <img src="./logo.png" alt="Nova Studio Logo" class="relative z-10 w-full h-full object-contain drop-shadow-[0_0_40px_rgba(34,211,238,0.5)] transform group-hover:scale-105 transition-transform duration-700 ease-fluid">
+            </div>
+          </div>
+          
+          <div class="fade-section fade-up" style="transition-delay:150ms">
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-white mb-8 tracking-tighter leading-[1.1] max-w-4xl mx-auto">
+              <span class="block py-4 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-sm">${content.hero.title}</span>
+            </h1>
+          </div>
+          
+          <div class="fade-section fade-up" style="transition-delay:250ms">
+            <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-14 leading-relaxed font-light">${content.hero.subtitle}</p>
+          </div>
+          
+          <div class="fade-section fade-up" style="transition-delay:350ms">
+            <a href="#/projects" class="w-full sm:w-auto px-10 py-4 bg-white text-nova-bg rounded-full font-bold text-lg inline-flex items-center justify-center space-x-3 transition-all duration-300 ease-fluid hover:scale-105 active:scale-95 hover:bg-nova-primary hover:text-white hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] group">
+              <span>${content.hero.ctaPrimary}</span>
+              <span class="transform group-hover:translate-x-1 transition-transform">${icon.arrow}</span>
+            </a>
+          </div>
         </div>
-        <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce text-nova-muted/50">${icon.down}</div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/30 hover:text-white transition-colors cursor-pointer" onclick="document.getElementById('latest-release').scrollIntoView({behavior:'smooth'})">
+          ${icon.down}
+        </div>
       </section>
-      <section class="py-20 relative"><div class="max-w-5xl mx-auto px-6"><div class="fade-section fade-up"><div class="flex justify-between items-end mb-10 px-2"><h2 class="text-3xl font-display font-bold text-white">${content.projects.latestRelease}</h2><a href="#/projects" class="flex items-center space-x-2 text-nova-primary hover:text-white transition-colors text-sm font-medium"><span>${content.projects.viewAll}</span>${icon.arrow}</a></div></div><div class="fade-section fade-up">${projects.map(projectCard).join('')}</div></div></section>
-      <section id="about" class="py-24 relative"><div class="max-w-7xl mx-auto px-6"><div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start"><div class="fade-section fade-right"><div class="glass-panel rounded-[2rem] p-10 lg:p-12 relative overflow-hidden"><div class="absolute top-0 right-0 w-64 h-64 bg-nova-primary/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div><h2 class="text-3xl sm:text-4xl font-display font-bold text-white mb-6 relative z-10">${content.about.title}</h2><div class="prose prose-lg prose-invert text-gray-300 mb-8 leading-relaxed relative z-10"><p>${content.about.description}</p></div></div></div><div class="fade-section fade-left" style="transition-delay:200ms"><div class="relative"><h3 class="text-2xl font-display font-bold text-white mb-8 pl-4 border-l-4 border-nova-primary">${content.about.teamTitle}</h3><div class="grid gap-4">${content.about.team.map(member => `<div class="flex items-center p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-nova-primary/30 hover:bg-white/10 transition-all duration-300 group"><div class="w-10 h-10 rounded-full bg-nova-secondary/20 flex items-center justify-center text-nova-secondary mr-4 group-hover:scale-110 transition-transform">${icon.user}</div><div><div class="font-medium text-white text-lg">${member.role}</div></div></div>`).join('')}</div></div></div></div></div></section>
+
+      <!-- Latest Projects (Gap Fixed: pb-0) -->
+      <section id="latest-release" class="pt-20 pb-0 relative z-10">
+        <div class="max-w-5xl mx-auto px-6">
+          <div class="fade-section fade-up">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4 px-2 border-b border-white/10 pb-6">
+              <h2 class="text-3xl sm:text-4xl font-display font-bold text-white tracking-tight">${content.projects.latestRelease}</h2>
+              <a href="#/projects" class="flex items-center space-x-2 text-nova-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-wider group">
+                <span>${content.projects.viewAll}</span>
+                <span class="transform group-hover:translate-x-1 transition-transform">${icon.arrow}</span>
+              </a>
+            </div>
+          </div>
+          <!-- Reduced margin from mb-20 to mb-10 -->
+          <div class="fade-section fade-up mb-10" style="transition-delay:100ms">
+            ${projects.map(projectCard).join('')}
+          </div>
+        </div>
+      </section>
+
+      <!-- About & Expressive Carousel (Gap Fixed: pt-0 to flow into prev section) -->
+      <section id="about" class="pt-0 pb-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-0 md:px-6">
+          <div class="text-center max-w-3xl mx-auto mb-16 px-6 fade-section fade-up">
+            <h2 class="text-4xl sm:text-5xl font-display font-bold text-white mb-6 tracking-tight">${content.about.title}</h2>
+            <p class="text-lg sm:text-xl text-gray-300 leading-relaxed font-light">${content.about.description}</p>
+          </div>
+          
+          <div class="fade-section fade-up w-full">
+            <div class="flex items-center justify-between mb-2 px-10">
+              <h3 class="text-2xl font-display font-bold text-white pl-4 border-l-4 border-nova-primary">${content.about.teamTitle}</h3>
+            </div>
+            ${renderTeamCarousel(content)}
+          </div>
+        </div>
+      </section>
+
       ${contactSection(content)}
     </div>`}
   </main>
 
-  <footer class="bg-nova-bg border-t border-white/5 py-12 relative z-10"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row justify-between items-center gap-6"><div class="flex items-center space-x-2"><div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-nova-primary">${icon.gamepad}</div><span class="text-xl font-display font-bold text-white tracking-tight">NOVA</span></div><div class="text-center md:text-right text-sm text-nova-muted">&copy; ${new Date().getFullYear()} ${content.footer.copyright}. ${content.footer.rights}</div></div></div></footer>`;
+  <footer class="bg-black/50 backdrop-blur-md border-t border-white/5 py-12 relative z-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center space-x-3 opacity-80 hover:opacity-100 transition-opacity">
+          <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-nova-primary shadow-inner">
+            ${icon.gamepad}
+          </div>
+          <span class="text-2xl font-display font-bold text-white tracking-tight">NOVA</span>
+        </div>
+        <div class="text-center md:text-right text-sm text-gray-500 font-medium">
+          &copy; ${new Date().getFullYear()} ${content.footer.copyright}. ${content.footer.rights}
+        </div>
+      </div>
+    </div>
+  </footer>`;
 
-  app.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', (event) => {
-    event.preventDefault();
-    lang = lang === Language.EN ? Language.RU : Language.EN;
-    render();
-  }));
-
-  app.querySelector('[data-mobile-toggle]')?.addEventListener('click', (event) => {
-    event.preventDefault();
-    mobileOpen = !mobileOpen;
-    render();
-  });
-
-  app.querySelectorAll('[data-contact]').forEach(btn => btn.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (hashPath().startsWith('/projects')) {
-      window.location.hash = '/';
-      setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 30);
-    } else {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    }
-    mobileOpen = false;
-    render();
-  }));
-
+  bindInteractions();
+  if (!isProjects) setTimeout(initCarousel, 10);
   activateFadeIn();
   updateNavbarScrolled();
 }
 
-function contactSection(content) {
-  return `<section id="contact" class="py-32 relative z-10"><div class="max-w-4xl mx-auto px-6 text-center"><div class="fade-section fade-up"><h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-6">${content.contact.title}</h2><p class="text-xl text-gray-400 mb-16 max-w-2xl mx-auto">${content.contact.subtitle}</p></div><div class="fade-section fade-up" style="transition-delay:100ms"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><a href="mailto:wvwvalli@gmail.com" class="glass-panel p-8 rounded-3xl hover:bg-white/5 transition-all group flex flex-col items-center justify-center border border-white/5 hover:border-nova-primary/30"><div class="w-14 h-14 rounded-full bg-nova-primary/20 text-nova-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">${icon.mail}</div><h3 class="text-lg font-display text-white mb-1">${content.contact.emailLabel}</h3><span class="text-gray-400 font-sans text-sm">nova.gamedev.studio@gmail.com</span></a><a href="https://t.me/GameDevNova" target="_blank" rel="noopener noreferrer" class="glass-panel p-8 rounded-3xl hover:bg-white/5 transition-all group flex flex-col items-center justify-center border border-white/5 hover:border-nova-secondary/30"><div class="w-14 h-14 rounded-full bg-nova-secondary/20 text-nova-secondary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">${icon.send}</div><h3 class="text-lg font-display text-white mb-1">Telegram</h3><span class="text-gray-400 font-sans text-sm">@GameDevNova</span></a></div></div></div></section>`;
+// Controls UI Mobile Menu visibility seamlessly
+function toggleMobileMenu() {
+  mobileOpen = !mobileOpen;
+  const menu = document.getElementById('mobile-menu');
+  const toggleIcon = document.getElementById('mobile-toggle-icon');
+
+  if(mobileOpen) {
+      menu.classList.remove('opacity-0', 'scale-95', '-translate-y-4', 'pointer-events-none');
+      menu.classList.add('opacity-100', 'scale-100', 'translate-y-0', 'pointer-events-auto');
+      toggleIcon.innerHTML = icon.close;
+  } else {
+      menu.classList.add('opacity-0', 'scale-95', '-translate-y-4', 'pointer-events-none');
+      menu.classList.remove('opacity-100', 'scale-100', 'translate-y-0', 'pointer-events-auto');
+      toggleIcon.innerHTML = icon.menu;
+  }
+}
+
+function bindInteractions() {
+  // Mobile Menu Click purely updates CSS
+  document.getElementById('mobile-toggle-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleMobileMenu();
+  });
+
+  // Contact smoothly scrolls to bottom of identical page view
+  app.querySelectorAll('[data-contact]').forEach(btn => btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const contactEl = document.getElementById('contact');
+    if (contactEl) contactEl.scrollIntoView({ behavior: 'smooth' });
+    if (mobileOpen) toggleMobileMenu();
+  }));
+
+  // Language switch
+  app.querySelectorAll('[data-lang]').forEach(btn => btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    lang = lang === Language.EN ? Language.RU : Language.EN;
+    mobileOpen = false;
+    render();
+  }));
+
+  // Prevent Nav links from rewriting URL to prevent flash/reload on the same page
+  app.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetHash = link.getAttribute('href');
+      const currentHash = window.location.hash || '#/';
+      if (targetHash === currentHash) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (mobileOpen) toggleMobileMenu();
+      } else {
+        if (mobileOpen) toggleMobileMenu();
+      }
+    });
+  });
 }
 
 function activateFadeIn() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
     });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
+  }, { threshold: 0.15 });
+
+  setTimeout(() => { document.querySelectorAll('.fade-section').forEach(el => observer.observe(el)); }, 0);
 }
 
+// Router Listens
+let currentPath = hashPath();
 window.addEventListener('hashchange', () => {
-  mobileOpen = false;
-  render();
+  const newPath = hashPath();
+  if (currentPath !== newPath) {
+    currentPath = newPath;
+    mobileOpen = false;
+    window.scrollTo(0,0);
+    render();
+  }
 });
+
 window.addEventListener('scroll', () => {
   const newScrolled = window.scrollY > 20;
   if (newScrolled !== scrolled) {
@@ -257,6 +545,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
+// Init
 if (!window.location.hash) window.location.hash = '/';
 scrolled = window.scrollY > 20;
 render();

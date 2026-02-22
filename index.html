@@ -17,14 +17,18 @@
             },
             colors: {
               nova: {
-                bg: '#0B0D12',
-                card: 'rgba(255, 255, 255, 0.03)',
+                bg: '#06080D',
+                card: 'rgba(255, 255, 255, 0.02)',
                 primary: '#22D3EE',
                 secondary: '#818CF8',
                 accent: '#C084FC',
                 text: '#E2E8F0',
                 muted: '#94A3B8',
               }
+            },
+            transitionTimingFunction: {
+              'fluid': 'cubic-bezier(0.25, 1, 0.5, 1)',
+              'spring': 'cubic-bezier(0.43, 0.13, 0.23, 0.96)',
             },
             animation: {
               'float': 'float 8s ease-in-out infinite',
@@ -36,7 +40,7 @@
             },
             keyframes: {
               float: {'0%, 100%': { transform: 'translateY(0)' },'50%': { transform: 'translateY(-20px)' }},
-              twinkle: {'0%, 100%': { opacity: 0.2, transform: 'scale(0.8)' },'50%': { opacity: 0.8, transform: 'scale(1.2)' }},
+              twinkle: {'0%, 100%': { opacity: 0.2, transform: 'scale(0.8)' },'50%': { opacity: 0.9, transform: 'scale(1.2)' }},
               morph: {
                 '0%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
                 '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
@@ -51,7 +55,9 @@
     <link rel="stylesheet" href="./site.css">
   </head>
   <body class="bg-nova-bg text-gray-100 font-sans selection:bg-nova-primary selection:text-white relative min-h-screen overflow-x-hidden">
-    <div id="app"></div>
+    <!-- Texture overlay for material feel (Z-0 so it never blocks clicks) -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.03] mix-blend-overlay noise-bg"></div>
+    <div id="app" class="relative z-10"></div>
     <script src="./app.js"></script>
   </body>
 </html>
