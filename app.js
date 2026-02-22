@@ -3,9 +3,6 @@ let lang = navigator.language === "ru-RU" ? Language.RU : Language.EN;
 let mobileOpen = false;
 let scrolled = false;
 
-let mouseX = 0;
-let mouseY = 0;
-
 // === IMAGES & OFFSETS CONFIGURATION ===
 const CONTENT = {
   EN: {
@@ -78,7 +75,7 @@ const PROJECTS_DATA = {
 const app = document.getElementById('app');
 const icon = {
   arrow: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
-  globe: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10Z"/></svg>',
+  globe: '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4 10 15 15 0 0 1 4-10Z"/></svg>',
   menu: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
   close: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 6-12 12M6 6l12 12"/></svg>',
   down: '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>',
@@ -107,31 +104,33 @@ function updateNavbarScrolled() {
   if (shell) shell.className = navShellClass();
 }
 
+// PERFORMANCE FIX: RequestAnimationFrame Throttling
+let rafId = null;
 window.addEventListener('mousemove', (e) => {
-  mouseX = (e.clientX / window.innerWidth - 0.5) * 30;
-  mouseY = (e.clientY / window.innerHeight - 0.5) * 30;
-  document.documentElement.style.setProperty('--mouse-x', mouseX);
-  document.documentElement.style.setProperty('--mouse-y', mouseY);
+  if (!rafId) {
+    rafId = requestAnimationFrame(() => {
+      // Calculate only once per frame
+      const x = (e.clientX / window.innerWidth - 0.5) * 20; // Reduced range for less jitter
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      document.documentElement.style.setProperty('--mouse-x', x.toFixed(2));
+      document.documentElement.style.setProperty('--mouse-y', y.toFixed(2));
+      rafId = null;
+    });
+  }
 });
 
-// GLOBAL BACKGROUND ELEMENTS (Ensures continuity across sections)
 function backgroundElements() {
   return `
   <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-    <!-- Main Blobs -->
-    <div class="parallax-layer absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-nova-primary/10 rounded-full blur-[100px] animate-morph mix-blend-screen" data-speed="1.5"></div>
-    <div class="parallax-layer absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-nova-accent/10 rounded-full blur-[120px] animate-morph mix-blend-screen" style="animation-delay:-5s" data-speed="-1"></div>
-    <div class="parallax-layer absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-nova-secondary/10 rounded-full blur-[90px] animate-morph mix-blend-screen" style="animation-delay:-10s" data-speed="2"></div>
-    
-    <!-- Moved this blob here from "About" section to fix the cut-off gap issue -->
-    <div class="parallax-layer absolute top-[60%] left-[-10%] w-[500px] h-[500px] bg-nova-accent/10 rounded-full blur-[120px] mix-blend-screen" data-speed="1"></div>
+    <!-- Simplified Blobs -->
+    <div class="parallax-layer absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-nova-primary/10 rounded-full blur-[80px] mix-blend-screen" data-speed="1.5"></div>
+    <div class="parallax-layer absolute bottom-[10%] right-[10%] w-[600px] h-[600px] bg-nova-accent/10 rounded-full blur-[90px] mix-blend-screen" style="animation-delay:-5s" data-speed="-1"></div>
+    <div class="parallax-layer absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-nova-secondary/10 rounded-full blur-[70px] mix-blend-screen" style="animation-delay:-10s" data-speed="2"></div>
 
-    <!-- Floating Icons -->
     <div class="parallax-layer absolute top-[15%] right-[15%] text-nova-primary/20 animate-float" data-speed="-2">${icon.gamepad.replace('w-5 h-5', 'w-14 h-14')}</div>
     <div class="parallax-layer absolute bottom-[25%] left-[10%] text-nova-secondary/20 animate-float-delayed" data-speed="1.2"><div class="w-16 h-16 rounded-2xl border-4 border-current opacity-50 transform -rotate-12 backdrop-blur-sm"></div></div>
     <div class="parallax-layer absolute top-[20%] left-[10%] text-nova-accent/20 animate-float" style="animation-duration:10s" data-speed="2">${icon.circle}</div>
 
-    <!-- Stars -->
     <div class="absolute top-[30%] left-[20%] star-drift star-drift-slow text-white/40"><span class="animate-twinkle block">${icon.star.replace('w-3 h-3', 'w-3 h-3')}</span></div>
     <div class="absolute top-[60%] right-[25%] star-drift star-drift-fast text-white/30"><span class="animate-twinkle block" style="animation-delay:1s">${icon.star.replace('w-3 h-3', 'w-2 h-2')}</span></div>
     <div class="absolute bottom-[40%] left-[40%] star-drift star-drift-mid text-white/50"><span class="animate-twinkle block" style="animation-delay:2s">${icon.sparkles}</span></div>
@@ -537,11 +536,18 @@ window.addEventListener('hashchange', () => {
   }
 });
 
+// Throttled Scroll Listener
+let scrollTimeout;
 window.addEventListener('scroll', () => {
-  const newScrolled = window.scrollY > 20;
-  if (newScrolled !== scrolled) {
-    scrolled = newScrolled;
-    updateNavbarScrolled();
+  if (!scrollTimeout) {
+    scrollTimeout = setTimeout(() => {
+      const newScrolled = window.scrollY > 20;
+      if (newScrolled !== scrolled) {
+        scrolled = newScrolled;
+        updateNavbarScrolled();
+      }
+      scrollTimeout = null;
+    }, 100);
   }
 });
 
