@@ -6,5 +6,21 @@
   "scripts": {
     "dev": "npx serve .",
     "preview": "npx serve ."
-  }
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  },
+  "description": "This version is fully static and does not use TypeScript, React, or Vite.",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NevskyOne/Nova-Landing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NevskyOne/Nova-Landing/issues"
+  },
+  "homepage": "https://github.com/NevskyOne/Nova-Landing#readme"
 }
