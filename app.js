@@ -424,7 +424,7 @@ function render() {
       <div class="flex flex-col md:flex-row justify-between items-center gap-6">
         <div class="flex items-center space-x-3 opacity-80 hover:opacity-100 transition-opacity">
           <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-nova-primary shadow-inner">
-            ${icon.gamepad}
+            <img src="./logo.png" alt="Nova Studio Logo" class="relative z-10 w-full h-full object-contain drop-shadow-[0_0_40px_rgba(34,211,238,0.5)] transform group-hover:scale-105 transition-transform duration-700 ease-fluid">
           </div>
           <span class="text-2xl font-display font-bold text-white tracking-tight">NOVA</span>
         </div>
