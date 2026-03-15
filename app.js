@@ -58,7 +58,7 @@ const PROJECTS_DATA = {
     imageUrl: 'https://img.itch.zone/aW1nLzI1NDkyNTk1LnBuZw==/original/cyjCIM.png',
     tags: ['Adventure', 'Cozy', 'Puzzle'],
     links: [
-      { label: 'Download for Windows', url: 'https://zws.im/󠁦󠁷󠁵󠁹‌󠁰󠁨', icon: 'download' },
+      { label: 'Download for Windows', url: 'https://zws.im/󠁩󠁵󠁭󠁮󠁭󠁪󠁪󠁦󠁷󠁵󠁹‌󠁰󠁨', icon: 'download' },
       { label: 'View on Itch.io', url: 'https://nevskyone.itch.io/warmtail', icon: 'itch' }
     ]
   }],
@@ -69,7 +69,7 @@ const PROJECTS_DATA = {
     imageUrl: 'https://img.itch.zone/aW1nLzI1NDkyNTk1LnBuZw==/original/cyjCIM.png',
     tags: ['Приключение', 'Уютная', 'Головоломка'],
     links: [
-      { label: 'Скачать для Windows', url: 'https://zws.im/󠁦󠁷󠁵󠁹‌󠁰󠁨', icon: 'download' },
+      { label: 'Скачать для Windows', url: 'https://zws.im/󠁩󠁵󠁭󠁮󠁭󠁪󠁪', icon: 'download' },
       { label: 'Смотреть на Itch.io', url: 'https://nevskyone.itch.io/warmtail', icon: 'itch' }
     ]
   }]
